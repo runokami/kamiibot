@@ -4,27 +4,24 @@ on:
   push:
     branches:
       - main
-  schedule:
-    - cron: '0 * * * *'  # Her saat başı çalıştırma
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+      - name: Check out repository
+        uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '16'
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'  # veya başka bir sürüm kullanabilirsiniz
 
-    - name: Install dependencies
-      run: |
-        npm install
+      - name: Install dependencies
+        run: npm install  # package.json'dan bağımlılıkları yükler
 
-    - name: Run bot
-      run: |
-        node index.js
-      env:
-        DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+      - name: Run bot
+        run: node index.js  # botu çalıştırır
+        env:
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}  # Discord token'ı burada kullanılır
